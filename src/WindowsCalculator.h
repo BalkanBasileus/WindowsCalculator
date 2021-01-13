@@ -1,5 +1,6 @@
 #pragma once
 #include<iostream>
+#include<string>
 
 namespace WindowsCalculator {
 
@@ -27,7 +28,6 @@ namespace WindowsCalculator {
 			numberOne = 0;
 			numberTwo = 0;
 			result = 0;
-			equalClicked = false;
 			operatorPressed = false;
 		}
 
@@ -319,6 +319,7 @@ namespace WindowsCalculator {
 			this->buttonCE->TabIndex = 17;
 			this->buttonCE->Text = L"CE";
 			this->buttonCE->UseVisualStyleBackColor = true;
+			this->buttonCE->Click += gcnew System::EventHandler(this, &MyForm::clearCE);
 			// 
 			// buttonExponential
 			// 
@@ -330,6 +331,7 @@ namespace WindowsCalculator {
 			this->buttonExponential->TabIndex = 16;
 			this->buttonExponential->Text = L"n^2";
 			this->buttonExponential->UseVisualStyleBackColor = true;
+			this->buttonExponential->Click += gcnew System::EventHandler(this, &MyForm::exponetiate);
 			// 
 			// buttonFactorial
 			// 
@@ -341,6 +343,7 @@ namespace WindowsCalculator {
 			this->buttonFactorial->TabIndex = 15;
 			this->buttonFactorial->Text = L"n!";
 			this->buttonFactorial->UseVisualStyleBackColor = true;
+			this->buttonFactorial->Click += gcnew System::EventHandler(this, &MyForm::factorial);
 			// 
 			// textBox1
 			// 
@@ -390,19 +393,23 @@ namespace WindowsCalculator {
 
 private: System::Void numberButton0_9_Clicked(System::Object^ sender, System::EventArgs^ e) {
 
-	//if (operatorPressed) {			// <- Problem here. If commented out it cannot compute with operator in textbox string. If you use it, it will reset second number after first calculation...
-		//textBox1->ResetText();
-	//}
+	// If arithmetic oper. already pressed, reset display in order to get second number.
+	if (operatorPressed) {			
+		textBox1->ResetText();
+		operatorPressed = false;
+	}
 
+	// Else append. Ex: 1 -> 18
 	Button^ numbers = safe_cast<Button^>(sender);
 
 	textBox1->AppendText(numbers->Text);
-
-	
-	//cout << "numberOne: " << numberOne << " " << "numberTwo: " << numberTwo << " " << "Result: " << result << endl;
 	
 }
 private: System::Void arithmeticButtonClicked(System::Object^ sender, System::EventArgs^ e) {
+
+	if (numberOne == 0 && numberTwo == 0) {
+		//... NEED TO FIND FIX HERE.. MUST ACCOUNT FOR PRESSING OPERATOR BUTTON WHEN DISPLAY BLANK..
+	}
 
 	numberOne = Double::Parse(textBox1->Text); // Set numberOne before appending operator to display.
 
@@ -413,9 +420,10 @@ private: System::Void arithmeticButtonClicked(System::Object^ sender, System::Ev
 	
 }
 private: System::Void equalButtonClicked(System::Object^ sender, System::EventArgs^ e) {
+	// Initializes second number and performs math based on operator pressed.
 
 	numberTwo = Double::Parse(textBox1->Text);
-	cout << operatorPressed << endl;
+
 	switch (operatorUsed) {
 	case '/': 
 		result = numberOne / numberTwo;
@@ -431,13 +439,24 @@ private: System::Void equalButtonClicked(System::Object^ sender, System::EventAr
 		break;
 	}
 
+	// Display result to screen.
 	textBox1->ResetText();
 	textBox1->Text = result.ToString();
 
+	//Reset numbers 
+	numberOne = 0;
+	numberTwo = 0;
+	result = 0;
+
+	operatorPressed = false;	//Reset for numberButton0_9_Clicked		
+
 }
+
+// Functions set operator for switch statement in equalButtonClicked function
+
 private: System::Void dividePressed(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 
-	operatorUsed = '/';
+	operatorUsed = '/'; 
 }
 private: System::Void multiplyPressed(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 
@@ -450,6 +469,48 @@ private: System::Void subtractPressed(System::Object^ sender, System::Windows::F
 private: System::Void additionPressed(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 
 	operatorUsed = '+';
+}
+
+// Exponentiate n^2
+private: System::Void exponetiate(System::Object^ sender, System::EventArgs^ e) {
+
+	// n^2
+	double exponentiateNumber = Double::Parse(textBox1->Text);
+	exponentiateNumber *= exponentiateNumber;
+
+	//Display
+	textBox1->ResetText();
+	textBox1->Text = exponentiateNumber.ToString();
+}
+
+
+// CE
+private: System::Void clearCE(System::Object^ sender, System::EventArgs^ e) {
+	// Resets everything.
+
+	textBox1->ResetText();
+	numberOne = 0;
+	numberTwo = 0;
+	result = 0;
+}
+
+private: System::Void factorial(System::Object^ sender, System::EventArgs^ e) {
+
+	double answer = 1;
+
+	double n = Double::Parse(textBox1->Text);
+	int i = 1;
+
+	// Factorial. 5! = 1 * 2 * 3 * 4 * 5.
+	while (i <= n)
+	{
+		answer = answer * i;
+		i++;
+	}
+
+	//Display
+	textBox1->ResetText();
+	textBox1->Text = answer.ToString();
 }
 
 };
