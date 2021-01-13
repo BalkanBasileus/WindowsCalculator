@@ -25,6 +25,7 @@ namespace WindowsCalculator {
 			//TODO: Add the constructor code here
 			//
 
+			// Initialize Variables
 			numberOne = 0;
 			numberTwo = 0;
 			result = 0;
@@ -244,6 +245,7 @@ namespace WindowsCalculator {
 			this->buttonDecimal->TabIndex = 10;
 			this->buttonDecimal->Text = L".";
 			this->buttonDecimal->UseVisualStyleBackColor = true;
+			this->buttonDecimal->Click += gcnew System::EventHandler(this, &MyForm::makeDecimal);
 			// 
 			// buttonEqual
 			// 
@@ -393,22 +395,41 @@ namespace WindowsCalculator {
 
 private: System::Void numberButton0_9_Clicked(System::Object^ sender, System::EventArgs^ e) {
 
-	// If arithmetic oper. already pressed, reset display in order to get second number.
-	if (operatorPressed) {			
-		textBox1->ResetText();
-		operatorPressed = false;
+	if ( operatorPressed && textBox1->Text->Contains(".") ) {
+		
+		Button^ numbers = safe_cast<Button^>(sender);
+		textBox1->AppendText(numbers->Text);
+	}
+	else if ( textBox1->Text->Contains(".") ) {
+		// Else append. Ex: . -> .1
+		Button^ numbers = safe_cast<Button^>(sender);
+
+		textBox1->AppendText(numbers->Text);
+	}
+	else {
+		// Else append. Ex: 1 -> 18
+		Button^ numbers = safe_cast<Button^>(sender);
+
+		textBox1->AppendText(numbers->Text);
 	}
 
-	// Else append. Ex: 1 -> 18
-	Button^ numbers = safe_cast<Button^>(sender);
+	// If arithmetic oper. already pressed, reset display in order to get second number.
+	if ( operatorPressed && !textBox1->Text->Contains(".") ) {
+		textBox1->ResetText();
+		operatorPressed = false;
 
-	textBox1->AppendText(numbers->Text);
+		// Else append. Ex: 1 -> 18
+		Button^ numbers = safe_cast<Button^>(sender);
+
+		textBox1->AppendText(numbers->Text);
+	}
 	
 }
 private: System::Void arithmeticButtonClicked(System::Object^ sender, System::EventArgs^ e) {
 
-	if (numberOne == 0 && numberTwo == 0) {
+	if (numberOne == 0 && numberTwo == 0 && result == 0) {
 		//... NEED TO FIND FIX HERE.. MUST ACCOUNT FOR PRESSING OPERATOR BUTTON WHEN DISPLAY BLANK..
+		textBox1->ResetText();
 	}
 
 	numberOne = Double::Parse(textBox1->Text); // Set numberOne before appending operator to display.
@@ -473,6 +494,7 @@ private: System::Void additionPressed(System::Object^ sender, System::Windows::F
 
 // Exponentiate n^2
 private: System::Void exponetiate(System::Object^ sender, System::EventArgs^ e) {
+	// Return number on display ^ 2
 
 	// n^2
 	double exponentiateNumber = Double::Parse(textBox1->Text);
@@ -494,14 +516,16 @@ private: System::Void clearCE(System::Object^ sender, System::EventArgs^ e) {
 	result = 0;
 }
 
+// n!
 private: System::Void factorial(System::Object^ sender, System::EventArgs^ e) {
+	// Calculates factorial of number on display
 
 	double answer = 1;
 
-	double n = Double::Parse(textBox1->Text);
-	int i = 1;
+	double n = Double::Parse(textBox1->Text); // Number from display
+	int i = 1; // index
 
-	// Factorial. 5! = 1 * 2 * 3 * 4 * 5.
+	// Factorial in reverse. 5! = 1 * 2 * 3 * 4 * 5.
 	while (i <= n)
 	{
 		answer = answer * i;
@@ -513,5 +537,19 @@ private: System::Void factorial(System::Object^ sender, System::EventArgs^ e) {
 	textBox1->Text = answer.ToString();
 }
 
+private: System::Void makeDecimal(System::Object^ sender, System::EventArgs^ e) {
+	// Sets decimal
+
+	// After pressing operator button, reset screen and append decimal. Ex: (3 + .5) = 3 + -> . -> .5 -> = -> 3.5
+	if (operatorPressed) {
+		textBox1->ResetText();
+		textBox1->AppendText(".");
+	}
+	// Prevent two decimals side by side. Ex: 3..5 or .3.5
+	if ( !textBox1->Text->Contains(".") ) {
+		textBox1->AppendText(".");
+	}
+
+}
 };
 }
