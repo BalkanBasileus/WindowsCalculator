@@ -625,15 +625,17 @@ namespace WindowsCalculator {
 		}
 #pragma endregion
 
-private: System::Void numberButton0_9_Clicked(System::Object^ sender, System::EventArgs^ e) {
+private: System::Void numberButton0_9_Clicked(System::Object^ sender, System::EventArgs^ e) {	// PROBLEM WITH "10.2 - .2". Results in "10.2 - 2"
 
-	if ( operatorPressed && textBox1->Text->Contains(".") ) {
+	// if display contains decimal number with operator. Ex: "1.5+*"
+	if ( operatorPressed && numberOne.ToString()->Contains(".") ) {
 		
-		//textBox1->ResetText();
+		textBox1->ResetText();
 		Button^ numbers = safe_cast<Button^>(sender);
 		textBox1->AppendText(numbers->Text);
 	}
-	else if ( textBox1->Text->Contains(".") ) {
+	// If display only "."
+	else if ( textBox1->Text->Length == 1 && textBox1->Text->Contains(".") ) {
 		// Else append. Ex: . -> .1
 		Button^ numbers = safe_cast<Button^>(sender);
 
@@ -659,12 +661,8 @@ private: System::Void numberButton0_9_Clicked(System::Object^ sender, System::Ev
 	
 }
 private: System::Void arithmeticButtonClicked(System::Object^ sender, System::EventArgs^ e) {
-
-	//if (numberOne == 0 && numberTwo == 0 && result == 0) {
-							//... NEED TO FIND FIX HERE.. MUST ACCOUNT FOR PRESSING OPERATOR BUTTON WHEN DISPLAY BLANK..
-		//textBox1->ResetText();
-	//}
-
+	// Appends spciic operator to display and initializes numberOne
+	
 	// If screen blank, do nothing.
 	if (textBox1->Text->Length == NULL) {
 		textBox1->AppendText("");
@@ -681,18 +679,6 @@ private: System::Void arithmeticButtonClicked(System::Object^ sender, System::Ev
 }
 private: System::Void equalButtonClicked(System::Object^ sender, System::EventArgs^ e) {
 	// Initializes second number and performs math based on operator pressed.
-
-
-	/* MUST WORK ON THIS! IF DISPLAY : "0.009 * 5", ERROR!
-	// If display contains decimal, operator, and second number on screen
-	
-	PsuedoCode
-		copy numberOne to type Stirng
-		if numberOne.ToString contains(".") && operatorPressed
-			textBox1->ResetText();
-	
-		...Problem. Display already contains 2nd number. Must isolate.
-	*/
 
 	// If screen blank, do nothing.
 	if (textBox1->Text->Length == NULL) {
