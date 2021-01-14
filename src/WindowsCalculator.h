@@ -1,6 +1,7 @@
 #pragma once
 #include<iostream>
 #include<string>
+#include<iomanip>
 
 namespace WindowsCalculator {
 
@@ -81,6 +82,36 @@ namespace WindowsCalculator {
 		bool operatorPressed = false;
 		char operatorUsed = NULL;
 
+	// Menu Buttons
+	private: System::Windows::Forms::MenuStrip^ menuStrip1;
+	private: System::Windows::Forms::ToolStripMenuItem^ viewToolStripMenuItem;
+
+	private: System::Windows::Forms::ToolStripMenuItem^ viewToolStripMenuItem1;
+	private: System::Windows::Forms::ToolStripMenuItem^ setPrecisionToolStripMenuItem1;
+	private: System::Windows::Forms::ToolStripMenuItem^ regularToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ scientificToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ toolStripMenuItem2;
+	private: System::Windows::Forms::ToolStripMenuItem^ toolStripMenuItem3;
+	private: System::Windows::Forms::ToolStripMenuItem^ toolStripMenuItem4;
+	private: System::Windows::Forms::Button^ button_e;
+
+	private: System::Windows::Forms::Button^ buttonPi;
+
+	private: System::Windows::Forms::Button^ exponentiateThree;
+
+	private: System::Windows::Forms::Button^ buttonDel;
+	private: System::Windows::Forms::Button^ button_Cos;
+
+	private: System::Windows::Forms::Button^ button_Sin;
+
+
+	private: System::Windows::Forms::Button^ button13;
+	private: System::Windows::Forms::Button^ button_Tan;
+
+
+
+
+
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -113,7 +144,26 @@ namespace WindowsCalculator {
 			this->buttonExponential = (gcnew System::Windows::Forms::Button());
 			this->buttonFactorial = (gcnew System::Windows::Forms::Button());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
+			this->viewToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->regularToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->scientificToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->viewToolStripMenuItem1 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->setPrecisionToolStripMenuItem1 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->toolStripMenuItem2 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->toolStripMenuItem3 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->toolStripMenuItem4 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->button_e = (gcnew System::Windows::Forms::Button());
+			this->buttonPi = (gcnew System::Windows::Forms::Button());
+			this->exponentiateThree = (gcnew System::Windows::Forms::Button());
+			this->buttonDel = (gcnew System::Windows::Forms::Button());
+			this->button_Cos = (gcnew System::Windows::Forms::Button());
+			this->button_Sin = (gcnew System::Windows::Forms::Button());
+			this->button13 = (gcnew System::Windows::Forms::Button());
+			this->button_Tan = (gcnew System::Windows::Forms::Button());
+			this->menuStrip1->SuspendLayout();
 			this->SuspendLayout();
+			this->MaximizeBox = false; // Disable fullscreen option in top right of app.
 			// 
 			// button1
 			// 
@@ -339,7 +389,7 @@ namespace WindowsCalculator {
 			// 
 			this->buttonFactorial->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
-			this->buttonFactorial->Location = System::Drawing::Point(13, 115);
+			this->buttonFactorial->Location = System::Drawing::Point(280, 115);
 			this->buttonFactorial->Name = L"buttonFactorial";
 			this->buttonFactorial->Size = System::Drawing::Size(58, 52);
 			this->buttonFactorial->TabIndex = 15;
@@ -351,7 +401,7 @@ namespace WindowsCalculator {
 			// 
 			this->textBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->textBox1->Location = System::Drawing::Point(12, 12);
+			this->textBox1->Location = System::Drawing::Point(13, 49);
 			this->textBox1->MaximumSize = System::Drawing::Size(300, 300);
 			this->textBox1->Multiline = true;
 			this->textBox1->Name = L"textBox1";
@@ -360,11 +410,181 @@ namespace WindowsCalculator {
 			this->textBox1->Text = L" ";
 			this->textBox1->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
 			// 
+			// menuStrip1
+			// 
+			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->viewToolStripMenuItem,
+					this->viewToolStripMenuItem1
+			});
+			this->menuStrip1->Location = System::Drawing::Point(0, 0);
+			this->menuStrip1->Name = L"menuStrip1";
+			this->menuStrip1->Size = System::Drawing::Size(274, 24);
+			this->menuStrip1->TabIndex = 20;
+			this->menuStrip1->Text = L"menuStrip1";
+			// 
+			// viewToolStripMenuItem
+			// 
+			this->viewToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->regularToolStripMenuItem,
+					this->scientificToolStripMenuItem
+			});
+			this->viewToolStripMenuItem->Name = L"viewToolStripMenuItem";
+			this->viewToolStripMenuItem->Size = System::Drawing::Size(39, 20);
+			this->viewToolStripMenuItem->Text = L"Edit";
+			// 
+			// regularToolStripMenuItem
+			// 
+			this->regularToolStripMenuItem->Name = L"regularToolStripMenuItem";
+			this->regularToolStripMenuItem->Size = System::Drawing::Size(122, 22);
+			this->regularToolStripMenuItem->Text = L"Regular";
+			this->regularToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::regularMode);
+			// 
+			// scientificToolStripMenuItem
+			// 
+			this->scientificToolStripMenuItem->Name = L"scientificToolStripMenuItem";
+			this->scientificToolStripMenuItem->Size = System::Drawing::Size(122, 22);
+			this->scientificToolStripMenuItem->Text = L"Scientific";
+			this->scientificToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::scientificMode);
+			// 
+			// viewToolStripMenuItem1
+			// 
+			this->viewToolStripMenuItem1->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->setPrecisionToolStripMenuItem1 });
+			this->viewToolStripMenuItem1->Name = L"viewToolStripMenuItem1";
+			this->viewToolStripMenuItem1->Size = System::Drawing::Size(44, 20);
+			this->viewToolStripMenuItem1->Text = L"View";
+			// 
+			// setPrecisionToolStripMenuItem1
+			// 
+			this->setPrecisionToolStripMenuItem1->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
+				this->toolStripMenuItem2,
+					this->toolStripMenuItem3, this->toolStripMenuItem4
+			});
+			this->setPrecisionToolStripMenuItem1->Name = L"setPrecisionToolStripMenuItem1";
+			this->setPrecisionToolStripMenuItem1->Size = System::Drawing::Size(141, 22);
+			this->setPrecisionToolStripMenuItem1->Text = L"Set Precision";
+			this->setPrecisionToolStripMenuItem1->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			// 
+			// toolStripMenuItem2
+			// 
+			this->toolStripMenuItem2->Name = L"toolStripMenuItem2";
+			this->toolStripMenuItem2->Size = System::Drawing::Size(101, 22);
+			this->toolStripMenuItem2->Text = L"0.0";
+			this->toolStripMenuItem2->Click += gcnew System::EventHandler(this, &MyForm::setPrecisionTenths);
+			// 
+			// toolStripMenuItem3
+			// 
+			this->toolStripMenuItem3->Name = L"toolStripMenuItem3";
+			this->toolStripMenuItem3->Size = System::Drawing::Size(101, 22);
+			this->toolStripMenuItem3->Text = L"0.00";
+			// 
+			// toolStripMenuItem4
+			// 
+			this->toolStripMenuItem4->Name = L"toolStripMenuItem4";
+			this->toolStripMenuItem4->Size = System::Drawing::Size(101, 22);
+			this->toolStripMenuItem4->Text = L"0.000";
+			// 
+			// button_e
+			// 
+			this->button_e->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button_e->Location = System::Drawing::Point(471, 115);
+			this->button_e->Name = L"button_e";
+			this->button_e->Size = System::Drawing::Size(58, 52);
+			this->button_e->TabIndex = 24;
+			this->button_e->Text = L"e";
+			this->button_e->UseVisualStyleBackColor = true;
+			// 
+			// buttonPi
+			// 
+			this->buttonPi->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->buttonPi->Location = System::Drawing::Point(407, 115);
+			this->buttonPi->Name = L"buttonPi";
+			this->buttonPi->Size = System::Drawing::Size(58, 52);
+			this->buttonPi->TabIndex = 23;
+			this->buttonPi->Text = L" π";
+			this->buttonPi->UseVisualStyleBackColor = true;
+			// 
+			// exponentiateThree
+			// 
+			this->exponentiateThree->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Regular,
+				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
+			this->exponentiateThree->Location = System::Drawing::Point(343, 115);
+			this->exponentiateThree->Name = L"exponentiateThree";
+			this->exponentiateThree->Size = System::Drawing::Size(58, 52);
+			this->exponentiateThree->TabIndex = 22;
+			this->exponentiateThree->Text = L"n^3";
+			this->exponentiateThree->UseVisualStyleBackColor = true;
+			// 
+			// buttonDel
+			// 
+			this->buttonDel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->buttonDel->Location = System::Drawing::Point(13, 115);
+			this->buttonDel->Name = L"buttonDel";
+			this->buttonDel->Size = System::Drawing::Size(58, 52);
+			this->buttonDel->TabIndex = 21;
+			this->buttonDel->Text = L"Del";
+			this->buttonDel->UseVisualStyleBackColor = true;
+			this->buttonDel->Click += gcnew System::EventHandler(this, &MyForm::buttonDel_Click);
+			// 
+			// button_Cos
+			// 
+			this->button_Cos->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button_Cos->Location = System::Drawing::Point(343, 173);
+			this->button_Cos->Name = L"button_Cos";
+			this->button_Cos->Size = System::Drawing::Size(58, 52);
+			this->button_Cos->TabIndex = 26;
+			this->button_Cos->Text = L"Cos";
+			this->button_Cos->UseVisualStyleBackColor = true;
+			// 
+			// button_Sin
+			// 
+			this->button_Sin->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button_Sin->Location = System::Drawing::Point(280, 173);
+			this->button_Sin->Name = L"button_Sin";
+			this->button_Sin->Size = System::Drawing::Size(58, 52);
+			this->button_Sin->TabIndex = 25;
+			this->button_Sin->Text = L"Sin";
+			this->button_Sin->UseVisualStyleBackColor = true;
+			// 
+			// button13
+			// 
+			this->button13->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button13->Location = System::Drawing::Point(471, 173);
+			this->button13->Name = L"button13";
+			this->button13->Size = System::Drawing::Size(58, 52);
+			this->button13->TabIndex = 28;
+			this->button13->Text = L"Cos";
+			this->button13->UseVisualStyleBackColor = true;
+			// 
+			// button_Tan
+			// 
+			this->button_Tan->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->button_Tan->Location = System::Drawing::Point(408, 173);
+			this->button_Tan->Name = L"button_Tan";
+			this->button_Tan->Size = System::Drawing::Size(58, 52);
+			this->button_Tan->TabIndex = 27;
+			this->button_Tan->Text = L"Tan";
+			this->button_Tan->UseVisualStyleBackColor = true;
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(275, 407);
+			this->ClientSize = System::Drawing::Size(274, 411);
+			this->Controls->Add(this->button13);
+			this->Controls->Add(this->button_Tan);
+			this->Controls->Add(this->button_Cos);
+			this->Controls->Add(this->button_Sin);
+			this->Controls->Add(this->button_e);
+			this->Controls->Add(this->buttonPi);
+			this->Controls->Add(this->exponentiateThree);
+			this->Controls->Add(this->buttonDel);
 			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->buttonDivide);
 			this->Controls->Add(this->buttonCE);
@@ -385,8 +605,13 @@ namespace WindowsCalculator {
 			this->Controls->Add(this->button3);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
+			this->Controls->Add(this->menuStrip1);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
+			this->MainMenuStrip = this->menuStrip1;
 			this->Name = L"MyForm";
 			this->Text = L"MyForm";
+			this->menuStrip1->ResumeLayout(false);
+			this->menuStrip1->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -427,10 +652,10 @@ private: System::Void numberButton0_9_Clicked(System::Object^ sender, System::Ev
 }
 private: System::Void arithmeticButtonClicked(System::Object^ sender, System::EventArgs^ e) {
 
-	if (numberOne == 0 && numberTwo == 0 && result == 0) {
-		//... NEED TO FIND FIX HERE.. MUST ACCOUNT FOR PRESSING OPERATOR BUTTON WHEN DISPLAY BLANK..
-		textBox1->ResetText();
-	}
+	//if (numberOne == 0 && numberTwo == 0 && result == 0) {
+							//... NEED TO FIND FIX HERE.. MUST ACCOUNT FOR PRESSING OPERATOR BUTTON WHEN DISPLAY BLANK..
+		//textBox1->ResetText();
+	//}
 
 	numberOne = Double::Parse(textBox1->Text); // Set numberOne before appending operator to display.
 
@@ -550,6 +775,26 @@ private: System::Void makeDecimal(System::Object^ sender, System::EventArgs^ e) 
 		textBox1->AppendText(".");
 	}
 
+}
+
+
+private: System::Void scientificMode(System::Object^ sender, System::EventArgs^ e) {
+
+	MyForm::Width = 580;
+}
+private: System::Void regularMode(System::Object^ sender, System::EventArgs^ e) {
+
+	MyForm::Width = 290;
+}
+private: System::Void setPrecisionTenths(System::Object^ sender, System::EventArgs^ e) {
+
+	// Need to figure out how to set precision.
+//	textBox1->Text-> setprecision(1);
+}
+
+
+private: System::Void buttonDel_Click(System::Object^ sender, System::EventArgs^ e) {
+	// Delete last entry on display
 }
 };
 }
