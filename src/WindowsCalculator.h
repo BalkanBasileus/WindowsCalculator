@@ -81,6 +81,8 @@ namespace WindowsCalculator {
 		bool equalClicked = false;
 		bool operatorPressed = false;
 		char operatorUsed = NULL;
+		double const PI = 3.14159;
+		double const E = 2.71828;
 
 	// Menu Buttons
 	private: System::Windows::Forms::MenuStrip^ menuStrip1;
@@ -163,7 +165,6 @@ namespace WindowsCalculator {
 			this->button_Tan = (gcnew System::Windows::Forms::Button());
 			this->menuStrip1->SuspendLayout();
 			this->SuspendLayout();
-			this->MaximizeBox = false; // Disable fullscreen option in top right of app.
 			// 
 			// button1
 			// 
@@ -493,6 +494,7 @@ namespace WindowsCalculator {
 			this->button_e->TabIndex = 24;
 			this->button_e->Text = L"e";
 			this->button_e->UseVisualStyleBackColor = true;
+			this->button_e->Click += gcnew System::EventHandler(this, &MyForm::button_e_Pressed);
 			// 
 			// buttonPi
 			// 
@@ -504,6 +506,7 @@ namespace WindowsCalculator {
 			this->buttonPi->TabIndex = 23;
 			this->buttonPi->Text = L" π";
 			this->buttonPi->UseVisualStyleBackColor = true;
+			this->buttonPi->Click += gcnew System::EventHandler(this, &MyForm::buttonPi_Pressed);
 			// 
 			// exponentiateThree
 			// 
@@ -608,6 +611,7 @@ namespace WindowsCalculator {
 			this->Controls->Add(this->menuStrip1);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 			this->MainMenuStrip = this->menuStrip1;
+			this->MaximizeBox = false;
 			this->Name = L"MyForm";
 			this->Text = L"MyForm";
 			this->menuStrip1->ResumeLayout(false);
@@ -622,6 +626,7 @@ private: System::Void numberButton0_9_Clicked(System::Object^ sender, System::Ev
 
 	if ( operatorPressed && textBox1->Text->Contains(".") ) {
 		
+		//textBox1->ResetText();
 		Button^ numbers = safe_cast<Button^>(sender);
 		textBox1->AppendText(numbers->Text);
 	}
@@ -657,6 +662,7 @@ private: System::Void arithmeticButtonClicked(System::Object^ sender, System::Ev
 		//textBox1->ResetText();
 	//}
 
+
 	numberOne = Double::Parse(textBox1->Text); // Set numberOne before appending operator to display.
 
 	Button^ numbersOperator = safe_cast<Button^>(sender);
@@ -667,6 +673,14 @@ private: System::Void arithmeticButtonClicked(System::Object^ sender, System::Ev
 }
 private: System::Void equalButtonClicked(System::Object^ sender, System::EventArgs^ e) {
 	// Initializes second number and performs math based on operator pressed.
+
+	/* MUST WORK ON THIS! IF DISPLAY : "0.009 * 5", ERROR!
+	// If display contains decimal, operator, and second number on screen
+	if (textBox1->Text->Contains("*") || textBox1->Text->Contains("/") || textBox1->Text->Contains("+") || textBox1->Text->Contains("-") ) {
+	
+		textBox1->Text->Split();
+	}
+	*/
 
 	numberTwo = Double::Parse(textBox1->Text);
 
@@ -716,6 +730,7 @@ private: System::Void additionPressed(System::Object^ sender, System::Windows::F
 
 	operatorUsed = '+';
 }
+
 
 // Exponentiate n^2
 private: System::Void exponetiate(System::Object^ sender, System::EventArgs^ e) {
@@ -795,6 +810,49 @@ private: System::Void setPrecisionTenths(System::Object^ sender, System::EventAr
 
 private: System::Void buttonDel_Click(System::Object^ sender, System::EventArgs^ e) {
 	// Delete last entry on display
+
+	if (textBox1->Text->Length > 0) {
+		// Display
+		textBox1->Text = textBox1->Text->Substring(0, textBox1->Text->Length - 1);
+	}
+	else {
+		// Do Nothing
+	}
+
 }
+private: System::Void buttonPi_Pressed(System::Object^ sender, System::EventArgs^ e) {
+
+
+	// 
+	if (numberOne != 0 && operatorPressed || numberOne == 0 && !operatorPressed) {
+		textBox1->ResetText();
+		textBox1->AppendText("3.14159");
+	}
+	// If Display contains somehting
+	else if (textBox1->Text->Length > 0) {
+		// Do nothing	
+	}
+	// Append Pi
+	else if (textBox1->Text->Length == 0) {
+		textBox1->AppendText("3.14159");
+	}
+}
+private: System::Void button_e_Pressed(System::Object^ sender, System::EventArgs^ e) {
+
+	// 
+	if (numberOne != 0 && operatorPressed || numberOne == 0 && !operatorPressed) {
+		textBox1->ResetText();
+		textBox1->AppendText("2.71828");
+	}
+	// If Display contains somehting
+	else if (textBox1->Text->Length > 0) {
+		// Do nothing	
+	}
+	// Append e
+	else if (textBox1->Text->Length == 0) {
+		textBox1->AppendText("2.71828");
+	}
+}
+
 };
 }
