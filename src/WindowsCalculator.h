@@ -98,16 +98,18 @@ namespace WindowsCalculator {
 	private: System::Windows::Forms::Button^ button_e;
 
 	private: System::Windows::Forms::Button^ buttonPi;
+	private: System::Windows::Forms::Button^ exponentThree;
 
-	private: System::Windows::Forms::Button^ exponentiateThree;
+
 
 	private: System::Windows::Forms::Button^ buttonDel;
 	private: System::Windows::Forms::Button^ button_Cos;
 
 	private: System::Windows::Forms::Button^ button_Sin;
+	private: System::Windows::Forms::Button^ button_Fraction;
 
 
-	private: System::Windows::Forms::Button^ button13;
+
 	private: System::Windows::Forms::Button^ button_Tan;
 
 
@@ -157,11 +159,11 @@ namespace WindowsCalculator {
 			this->toolStripMenuItem4 = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->button_e = (gcnew System::Windows::Forms::Button());
 			this->buttonPi = (gcnew System::Windows::Forms::Button());
-			this->exponentiateThree = (gcnew System::Windows::Forms::Button());
+			this->exponentThree = (gcnew System::Windows::Forms::Button());
 			this->buttonDel = (gcnew System::Windows::Forms::Button());
 			this->button_Cos = (gcnew System::Windows::Forms::Button());
 			this->button_Sin = (gcnew System::Windows::Forms::Button());
-			this->button13 = (gcnew System::Windows::Forms::Button());
+			this->button_Fraction = (gcnew System::Windows::Forms::Button());
 			this->button_Tan = (gcnew System::Windows::Forms::Button());
 			this->menuStrip1->SuspendLayout();
 			this->SuspendLayout();
@@ -384,7 +386,7 @@ namespace WindowsCalculator {
 			this->buttonExponential->TabIndex = 16;
 			this->buttonExponential->Text = L"n^2";
 			this->buttonExponential->UseVisualStyleBackColor = true;
-			this->buttonExponential->Click += gcnew System::EventHandler(this, &MyForm::exponetiate);
+			this->buttonExponential->Click += gcnew System::EventHandler(this, &MyForm::exponetTwo_Clicked);
 			// 
 			// buttonFactorial
 			// 
@@ -408,7 +410,6 @@ namespace WindowsCalculator {
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(250, 60);
 			this->textBox1->TabIndex = 19;
-			this->textBox1->Text = L" ";
 			this->textBox1->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
 			// 
 			// menuStrip1
@@ -419,7 +420,7 @@ namespace WindowsCalculator {
 			});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
-			this->menuStrip1->Size = System::Drawing::Size(274, 24);
+			this->menuStrip1->Size = System::Drawing::Size(564, 24);
 			this->menuStrip1->TabIndex = 20;
 			this->menuStrip1->Text = L"menuStrip1";
 			// 
@@ -508,16 +509,17 @@ namespace WindowsCalculator {
 			this->buttonPi->UseVisualStyleBackColor = true;
 			this->buttonPi->Click += gcnew System::EventHandler(this, &MyForm::buttonPi_Pressed);
 			// 
-			// exponentiateThree
+			// exponentThree
 			// 
-			this->exponentiateThree->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Regular,
-				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
-			this->exponentiateThree->Location = System::Drawing::Point(343, 115);
-			this->exponentiateThree->Name = L"exponentiateThree";
-			this->exponentiateThree->Size = System::Drawing::Size(58, 52);
-			this->exponentiateThree->TabIndex = 22;
-			this->exponentiateThree->Text = L"n^3";
-			this->exponentiateThree->UseVisualStyleBackColor = true;
+			this->exponentThree->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->exponentThree->Location = System::Drawing::Point(343, 115);
+			this->exponentThree->Name = L"exponentThree";
+			this->exponentThree->Size = System::Drawing::Size(58, 52);
+			this->exponentThree->TabIndex = 22;
+			this->exponentThree->Text = L"n^3";
+			this->exponentThree->UseVisualStyleBackColor = true;
+			this->exponentThree->Click += gcnew System::EventHandler(this, &MyForm::exponentThree_Clicked);
 			// 
 			// buttonDel
 			// 
@@ -553,16 +555,17 @@ namespace WindowsCalculator {
 			this->button_Sin->Text = L"Sin";
 			this->button_Sin->UseVisualStyleBackColor = true;
 			// 
-			// button13
+			// button_Fraction
 			// 
-			this->button13->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->button13->Location = System::Drawing::Point(471, 173);
-			this->button13->Name = L"button13";
-			this->button13->Size = System::Drawing::Size(58, 52);
-			this->button13->TabIndex = 28;
-			this->button13->Text = L"Cos";
-			this->button13->UseVisualStyleBackColor = true;
+			this->button_Fraction->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Regular,
+				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
+			this->button_Fraction->Location = System::Drawing::Point(471, 173);
+			this->button_Fraction->Name = L"button_Fraction";
+			this->button_Fraction->Size = System::Drawing::Size(58, 52);
+			this->button_Fraction->TabIndex = 28;
+			this->button_Fraction->Text = L"1/x";
+			this->button_Fraction->UseVisualStyleBackColor = true;
+			this->button_Fraction->Click += gcnew System::EventHandler(this, &MyForm::button_FractionClicked);
 			// 
 			// button_Tan
 			// 
@@ -579,14 +582,14 @@ namespace WindowsCalculator {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(274, 411);
-			this->Controls->Add(this->button13);
+			this->ClientSize = System::Drawing::Size(564, 411);
+			this->Controls->Add(this->button_Fraction);
 			this->Controls->Add(this->button_Tan);
 			this->Controls->Add(this->button_Cos);
 			this->Controls->Add(this->button_Sin);
 			this->Controls->Add(this->button_e);
 			this->Controls->Add(this->buttonPi);
-			this->Controls->Add(this->exponentiateThree);
+			this->Controls->Add(this->exponentThree);
 			this->Controls->Add(this->buttonDel);
 			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->buttonDivide);
@@ -662,53 +665,68 @@ private: System::Void arithmeticButtonClicked(System::Object^ sender, System::Ev
 		//textBox1->ResetText();
 	//}
 
+	// If screen blank, do nothing.
+	if (textBox1->Text->Length == NULL) {
+		textBox1->AppendText("");
+	}
+	else {
+		numberOne = Double::Parse(textBox1->Text); // Set numberOne before appending operator to display.
 
-	numberOne = Double::Parse(textBox1->Text); // Set numberOne before appending operator to display.
+		Button^ numbersOperator = safe_cast<Button^>(sender);
 
-	Button^ numbersOperator = safe_cast<Button^>(sender);
-
-	textBox1->AppendText(numbersOperator->Text);
-	operatorPressed = true;
+		textBox1->AppendText(numbersOperator->Text);
+		operatorPressed = true;
+	}
 	
 }
 private: System::Void equalButtonClicked(System::Object^ sender, System::EventArgs^ e) {
 	// Initializes second number and performs math based on operator pressed.
 
+
 	/* MUST WORK ON THIS! IF DISPLAY : "0.009 * 5", ERROR!
 	// If display contains decimal, operator, and second number on screen
-	if (textBox1->Text->Contains("*") || textBox1->Text->Contains("/") || textBox1->Text->Contains("+") || textBox1->Text->Contains("-") ) {
 	
-		textBox1->Text->Split();
-	}
+	PsuedoCode
+		copy numberOne to type Stirng
+		if numberOne.ToString contains(".") && operatorPressed
+			textBox1->ResetText();
+	
+		...Problem. Display already contains 2nd number. Must isolate.
 	*/
 
-	numberTwo = Double::Parse(textBox1->Text);
-
-	switch (operatorUsed) {
-	case '/': 
-		result = numberOne / numberTwo;
-		break;
-	case '*':
-		result = numberOne * numberTwo;
-		break;
-	case '-':
-		result = numberOne - numberTwo;
-		break;
-	case '+':
-		result = numberOne + numberTwo;
-		break;
+	// If screen blank, do nothing.
+	if (textBox1->Text->Length == NULL) {
+		textBox1->AppendText("");
 	}
+	else {
+		numberTwo = Double::Parse(textBox1->Text);
 
-	// Display result to screen.
-	textBox1->ResetText();
-	textBox1->Text = result.ToString();
+		switch (operatorUsed) {
+		case '/':
+			result = numberOne / numberTwo;
+			break;
+		case '*':
+			result = numberOne * numberTwo;
+			break;
+		case '-':
+			result = numberOne - numberTwo;
+			break;
+		case '+':
+			result = numberOne + numberTwo;
+			break;
+		}
 
-	//Reset numbers 
-	numberOne = 0;
-	numberTwo = 0;
-	result = 0;
+		// Display result to screen.
+		textBox1->ResetText();
+		textBox1->Text = result.ToString();
 
-	operatorPressed = false;	//Reset for numberButton0_9_Clicked		
+		//Reset numbers 
+		numberOne = 0;
+		numberTwo = 0;
+		result = 0;
+
+		operatorPressed = false;	//Reset for numberButton0_9_Clicked
+	}
 
 }
 
@@ -733,16 +751,22 @@ private: System::Void additionPressed(System::Object^ sender, System::Windows::F
 
 
 // Exponentiate n^2
-private: System::Void exponetiate(System::Object^ sender, System::EventArgs^ e) {
+private: System::Void exponetTwo_Clicked(System::Object^ sender, System::EventArgs^ e) {
 	// Return number on display ^ 2
 
-	// n^2
-	double exponentiateNumber = Double::Parse(textBox1->Text);
-	exponentiateNumber *= exponentiateNumber;
+	// If screen blank, do nothing.
+	if (textBox1->Text->Length == NULL) {
+		textBox1->AppendText("");
+	}
+	else {
+		// n^2
+		double exponentiateNumber = Double::Parse(textBox1->Text);
+		exponentiateNumber *= exponentiateNumber;
 
-	//Display
-	textBox1->ResetText();
-	textBox1->Text = exponentiateNumber.ToString();
+		//Display
+		textBox1->ResetText();
+		textBox1->Text = exponentiateNumber.ToString();
+	}
 }
 
 
@@ -760,28 +784,39 @@ private: System::Void clearCE(System::Object^ sender, System::EventArgs^ e) {
 private: System::Void factorial(System::Object^ sender, System::EventArgs^ e) {
 	// Calculates factorial of number on display
 
-	double answer = 1;
-
-	double n = Double::Parse(textBox1->Text); // Number from display
-	int i = 1; // index
-
-	// Factorial in reverse. 5! = 1 * 2 * 3 * 4 * 5.
-	while (i <= n)
-	{
-		answer = answer * i;
-		i++;
+	// If screen blank, do nothing.
+	if (textBox1->Text->Length == NULL) {
+		textBox1->AppendText("");
 	}
+	else {
+		double answer = 1;
 
-	//Display
-	textBox1->ResetText();
-	textBox1->Text = answer.ToString();
+		double n = Double::Parse(textBox1->Text); // Number from display
+		int i = 1; // index
+
+		// Factorial in reverse. 5! = 1 * 2 * 3 * 4 * 5.
+		while (i <= n)
+		{
+			answer = answer * i;
+			i++;
+		}
+
+		//Display
+		textBox1->ResetText();
+		textBox1->Text = answer.ToString();
+	}
 }
 
 private: System::Void makeDecimal(System::Object^ sender, System::EventArgs^ e) {
 	// Sets decimal
 
+	// if blank screen
+	if (textBox1->Text->Length == NULL) {
+		textBox1->AppendText(".");
+	}
+
 	// After pressing operator button, reset screen and append decimal. Ex: (3 + .5) = 3 + -> . -> .5 -> = -> 3.5
-	if (operatorPressed) {
+	else if (operatorPressed && !textBox1->Text->Length == NULL) {
 		textBox1->ResetText();
 		textBox1->AppendText(".");
 	}
@@ -792,7 +827,7 @@ private: System::Void makeDecimal(System::Object^ sender, System::EventArgs^ e) 
 
 }
 
-
+// Edit & View Menu Options
 private: System::Void scientificMode(System::Object^ sender, System::EventArgs^ e) {
 
 	MyForm::Width = 580;
@@ -853,6 +888,48 @@ private: System::Void button_e_Pressed(System::Object^ sender, System::EventArgs
 		textBox1->AppendText("2.71828");
 	}
 }
+
+private: System::Void button_FractionClicked(System::Object^ sender, System::EventArgs^ e) {
+	// Fraction. 1/x
+
+	// If screen blank, do nothing.
+	if (textBox1->Text->Length == NULL) {
+		textBox1->AppendText("");
+	}
+	else { // Otherwise, compute 1/x
+
+		double answer = 0;
+		double numerator = 1.0;
+		double denominator = Double::Parse(textBox1->Text);
+
+		answer = numerator / denominator;
+
+		// Display
+		textBox1->Text = answer.ToString();
+	}
+
+
+}
+
+// n^3
+private: System::Void exponentThree_Clicked(System::Object^ sender, System::EventArgs^ e) {
+	// Return number on display ^ 3
+
+	// If screen blank, do nothing.
+	if (textBox1->Text->Length == NULL) {
+		textBox1->AppendText("");
+	}
+	else {
+		// n^2
+		double exponentiateNumber = Double::Parse(textBox1->Text);
+		exponentiateNumber *= (exponentiateNumber * exponentiateNumber); // n^3
+
+		//Display
+		textBox1->ResetText();
+		textBox1->Text = exponentiateNumber.ToString();
+	}
+}
+
 
 };
 }
