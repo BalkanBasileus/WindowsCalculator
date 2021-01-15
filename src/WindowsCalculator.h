@@ -1,7 +1,7 @@
 #pragma once
 #include<iostream>
 #include<string>
-#include<iomanip>
+#include<cmath>
 
 namespace WindowsCalculator {
 
@@ -32,8 +32,6 @@ namespace WindowsCalculator {
 			result = 0;
 			operatorPressed = false;
 		}
-
-		//enum operators { SUBTRACT = '-', ADD = '+', MULTIPLY = '*', DIVIDE = '/' };
 
 
 	protected:
@@ -75,8 +73,8 @@ namespace WindowsCalculator {
 	protected:
 
 	private:
-		// private variables or calculator
-		
+
+		// private variables or calculator		
 		double numberOne, numberTwo, result;
 		bool equalClicked = false;
 		bool operatorPressed = false;
@@ -420,7 +418,7 @@ namespace WindowsCalculator {
 			});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
-			this->menuStrip1->Size = System::Drawing::Size(564, 24);
+			this->menuStrip1->Size = System::Drawing::Size(274, 24);
 			this->menuStrip1->TabIndex = 20;
 			this->menuStrip1->Text = L"menuStrip1";
 			// 
@@ -437,14 +435,14 @@ namespace WindowsCalculator {
 			// regularToolStripMenuItem
 			// 
 			this->regularToolStripMenuItem->Name = L"regularToolStripMenuItem";
-			this->regularToolStripMenuItem->Size = System::Drawing::Size(122, 22);
+			this->regularToolStripMenuItem->Size = System::Drawing::Size(180, 22);
 			this->regularToolStripMenuItem->Text = L"Regular";
 			this->regularToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::regularMode);
 			// 
 			// scientificToolStripMenuItem
 			// 
 			this->scientificToolStripMenuItem->Name = L"scientificToolStripMenuItem";
-			this->scientificToolStripMenuItem->Size = System::Drawing::Size(122, 22);
+			this->scientificToolStripMenuItem->Size = System::Drawing::Size(180, 22);
 			this->scientificToolStripMenuItem->Text = L"Scientific";
 			this->scientificToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::scientificMode);
 			// 
@@ -462,16 +460,15 @@ namespace WindowsCalculator {
 					this->toolStripMenuItem3, this->toolStripMenuItem4
 			});
 			this->setPrecisionToolStripMenuItem1->Name = L"setPrecisionToolStripMenuItem1";
-			this->setPrecisionToolStripMenuItem1->Size = System::Drawing::Size(141, 22);
+			this->setPrecisionToolStripMenuItem1->Size = System::Drawing::Size(180, 22);
 			this->setPrecisionToolStripMenuItem1->Text = L"Set Precision";
 			this->setPrecisionToolStripMenuItem1->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
 			// 
 			// toolStripMenuItem2
 			// 
 			this->toolStripMenuItem2->Name = L"toolStripMenuItem2";
-			this->toolStripMenuItem2->Size = System::Drawing::Size(101, 22);
+			this->toolStripMenuItem2->Size = System::Drawing::Size(180, 22);
 			this->toolStripMenuItem2->Text = L"0.0";
-			this->toolStripMenuItem2->Click += gcnew System::EventHandler(this, &MyForm::setPrecisionTenths);
 			// 
 			// toolStripMenuItem3
 			// 
@@ -543,6 +540,7 @@ namespace WindowsCalculator {
 			this->button_Cos->TabIndex = 26;
 			this->button_Cos->Text = L"Cos";
 			this->button_Cos->UseVisualStyleBackColor = true;
+			this->button_Cos->Click += gcnew System::EventHandler(this, &MyForm::buttonCos_Clicked);
 			// 
 			// button_Sin
 			// 
@@ -554,6 +552,7 @@ namespace WindowsCalculator {
 			this->button_Sin->TabIndex = 25;
 			this->button_Sin->Text = L"Sin";
 			this->button_Sin->UseVisualStyleBackColor = true;
+			this->button_Sin->Click += gcnew System::EventHandler(this, &MyForm::buttonSin_Clicked);
 			// 
 			// button_Fraction
 			// 
@@ -577,12 +576,13 @@ namespace WindowsCalculator {
 			this->button_Tan->TabIndex = 27;
 			this->button_Tan->Text = L"Tan";
 			this->button_Tan->UseVisualStyleBackColor = true;
+			this->button_Tan->Click += gcnew System::EventHandler(this, &MyForm::buttonTan_clicked);
 			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(564, 411);
+			this->ClientSize = System::Drawing::Size(274, 411);
 			this->Controls->Add(this->button_Fraction);
 			this->Controls->Add(this->button_Tan);
 			this->Controls->Add(this->button_Cos);
@@ -627,7 +627,7 @@ namespace WindowsCalculator {
 
 private: System::Void numberButton0_9_Clicked(System::Object^ sender, System::EventArgs^ e) {	// PROBLEM WITH "10.2 - .2". Results in "10.2 - 2"
 
-	// if display contains decimal number with operator. Ex: "1.5+*"
+	// if display contains decimal number with operator. Ex: "1.5+"
 	if ( operatorPressed && numberOne.ToString()->Contains(".") ) {
 		
 		textBox1->ResetText();
@@ -653,7 +653,7 @@ private: System::Void numberButton0_9_Clicked(System::Object^ sender, System::Ev
 		textBox1->ResetText();
 		operatorPressed = false;
 
-		// Else append. Ex: 1 -> 18
+		// Append. Ex: 1 -> 18
 		Button^ numbers = safe_cast<Button^>(sender);
 
 		textBox1->AppendText(numbers->Text);
@@ -917,5 +917,66 @@ private: System::Void exponentThree_Clicked(System::Object^ sender, System::Even
 }
 
 
+private: System::Void buttonSin_Clicked(System::Object^ sender, System::EventArgs^ e) {
+	// Return sin() of number on display
+
+	// If screen blank, do nothing.
+	if (textBox1->Text->Length == NULL) {
+		textBox1->AppendText("");
+	}
+	// If screen contains operator. Ex: "6 -" or "9 *". Do nothing.
+	else if (operatorPressed) {
+		textBox1->AppendText("");
+	}
+	else {
+		double sinNumber = Double::Parse(textBox1->Text);
+		sinNumber = sin(sinNumber);
+
+		//Display
+		textBox1->ResetText();
+		textBox1->Text = sinNumber.ToString();
+	}
+
+}
+private: System::Void buttonCos_Clicked(System::Object^ sender, System::EventArgs^ e) {
+	// Return cos() of number on display
+
+	// If screen blank, do nothing.
+	if (textBox1->Text->Length == NULL) {
+		textBox1->AppendText("");
+	}
+	// If screen contains operator. Ex: "6 -" or "9 *". Do nothing.
+	else if (operatorPressed){
+		textBox1->AppendText("");
+	}
+	else {
+		double cosNumber = Double::Parse(textBox1->Text);
+		cosNumber = cos(cosNumber);
+
+		//Display
+		textBox1->ResetText();
+		textBox1->Text = cosNumber.ToString();
+	}
+}
+private: System::Void buttonTan_clicked(System::Object^ sender, System::EventArgs^ e) {
+	// Return tan() of number on display
+
+	// If screen blank, do nothing.
+	if (textBox1->Text->Length == NULL) {
+		textBox1->AppendText("");
+	}
+	// If screen contains operator. Ex: "6 -" or "9 *". Do nothing.
+	else if (operatorPressed) {
+		textBox1->AppendText("");
+	}
+	else {
+		double tanNumber = Double::Parse(textBox1->Text);
+		tanNumber = tan(tanNumber);
+
+		//Display
+		textBox1->ResetText();
+		textBox1->Text = tanNumber.ToString();
+	}
+}
 };
 }
